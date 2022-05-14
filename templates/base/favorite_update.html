@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}｜お気に入り編集{% endblock %}
+{% block content %}
+
+<div class="header-bar">
+  <a href="{% url 'favorite' %}">&#8592; Back</a>
+</div>
+
+<div class="body-container">
+  <div class="body-header">
+    <h2>お気に入り編集</h2>
+  </div>
+
+  <div class="notion">
+    <p>※数字は半角、PFCは小数点一位まで可</p>
+  </div>
+  
+<form action="{% url 'favorite_update' favorite.id %}" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="button button-with-delete" type="submit">更新</button>
+  <a class='button button-delete' href="{% url 'favorite_delete' favorite.id %}">削除</a>
+</form>
+
+</div>
+{% endblock %}

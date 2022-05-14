@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}｜新着メモ{% endblock %}
+{% block content %}
+
+<!-- header-bar -->
+<div class="header-bar">
+  <div class="top-right-link">
+    <a href="{% url 'today_foods' %}"><i class="fas fa-home"></i>Home</a>
+  </div>
+  <div class="header-bar-main-msg">
+    <h1>筋肉、栄養学メモ</h1>
+  </div>
+  <div class="header-bar-bottom-msg">
+    <h3>今日は新しく<span> {{ count }} </span>記事投稿されました！</h3>
+  </div>
+</div>
+<!-- ///header-bar -->
+
+<div class="body-container">
+  <!-- body-header-bar -->
+  <div class="body-header">
+    <div class="body-header-title">
+      <div class="body-header-left">
+        <h2>新着メモ</h2>
+      </div>
+      <div class="body-header-right">
+        <a href="{% url 'blog_create' %}" class="fas fa-plus"></a>
+      </div>
+    </div>
+    <div class="links">
+      <a href="{% url 'all_blogs' %}">全記事</a>
+      <a href="{% url 'my_blogs' %}">自分の記事</a>
+      <a href="{% url 'drafts' %}">下書き</a>
+    </div>
+  </div>
+  <!-- ///body-header-bar -->
+
+  <!-- 記事一覧 -->
+  <div class="blog-body">
+
+    {% if blogs %}
+      {% for blog in blogs %}
+      {% if blog in today_created_blogs or blog in yes_created_blogs or blog in today_updated_blogs or blog in yes_updated_blogs %}
+        <div class="blog-each">
+          <div class="blog-each-top">
+            <p class="blog-info">
+              {% if request.user == blog.user %}
+                <a href="{% url 'dashboard' user.id %}">あなた</a>が{{blog.created}}に投稿<span class="blog-each-new">new!!</span>
+              {% else %}
+                {{ blog.user }}が{{blog.created}}に投稿<span class="blog-each-new">new!!</span>
+              {% endif %}
+            </p>
+            <a href="{% url 'blog' blog.id %}" class="fas fa-info-circle"></a>
+              <!-- {% if request.user == blog.user %}
+                <a href="{% url 'blog_update' blog.id %}" class="far fa-edit"></a>
+                <a href="{% url 'blog_delete' blog.id %}" class="far fa-trash-alt"></a>
+                {% endif %} -->
+            </div>
+            <h3>{{ blog.title }}</h3>
+          </div>
+          {% endif %}
+      {% endfor %}
+    {% else %}
+      <p>書かれた記事はありません。</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

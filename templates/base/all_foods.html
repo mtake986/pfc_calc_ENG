@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block title %}｜All Foods{% endblock %}
+{% block content %}
+
+<div class="header-bar">
+  <a href="{% url 'today_foods' %}">&#8592; Back</a>
+</div>
+
+<div class="body-container all_foods">
+  <div class="body-header">
+    <h2>Food list</h2>
+    <!-- <div class="notion">
+      <p>※食べもの名、日付、カテゴリから検索します。日付は月-日で検索してください。</p>
+    </div> -->
+    <form class="search-form" action="{% url 'food_search' %}" method="get">
+      <div class="search-form-row">
+        <div class="search-form-each food1">
+          <label for="food1">Food1</label>
+          <input class="search-form-food" type="text" name="food1" value='{{values.food1}}' placeholder="Chicken">
+        </div>
+        
+        <div class="search-form-each food2">
+          <label for="food2">Food2</label>
+          <input class="search-form-food" type="text" name="food2" value='{{values.food2}}' placeholder="Rice">
+        </div>
+        
+        <div class="search-form-each">
+          <label for="date">date</label>
+          <input class="search-form-date" type="text" name="date" value='{{values.date}}' placeholder="6-24">
+        </div>
+
+        <div class="search-form-each">
+          <label for="category">When</label>
+          <select class="search-form-category" name="category" id="type" >
+            <!-- <option value='なし'>なし</option>
+            <option value='朝'>朝</option>
+            <option value='昼'>昼</option>
+            <option value='夕'>夕</option>
+            <option value='間'>間</option> -->
+            {% for k, v in category_choices.items %}
+              <option value="{{ k }}" 
+                {% if k == values.category %}
+                  selected
+                {% endif %}
+                >
+                {{ v }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+        
+      </div>
+      <div class="search-form-row">
+        <button class="search-button" type="submit">Search</button>
+      </div>
+
+    </form>
+  </div>
+  <div class="food-items-wrapper">
+    <table>
+      <tr class="table-header">
+        <th class="align-left">Food</th>
+        <th>kcal</th>
+        <th>P</th>
+        <th>F</th>
+        <th>C</th>
+        <!-- <th>日</th> -->
+        <th>When</th>
+      </tr>
+      {% if foods %}
+        {% for food in foods %}
+          <tr>
+            <td class="align-left all-foods-data"><a href="{% url 'food_update' food.id %}">{{ food.name }}</a></td>
+            <td>{{ food.kcal }}</td>
+            <td>{{ food.protein }}</td>
+            <td>{{ food.fat }}</td>
+            <td>{{ food.carb }}</td>
+            <!-- <td>{{ food.eaten_date }}</td> -->
+            <td>{{ food.category }}</td>
+            <!-- <td><a href="{% url 'food_update' food.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url 'food_delete' food.id %}"><i class="far fa-trash-alt"></i></a></td> -->
+          </tr>
+        {% endfor %}
+      {% else %}
+        <td colspan="8" class="no-results">｜No Food｜</td>
+      {% endif %}
+      
+    </table>
+
+    {% if is_paginated %}
+      <div class="pagination class-base-pagination">
+        <span class="page-links">
+          {% if page_obj.has_previous %}
+          <a href="/all_foods?page={{ page_obj.previous_page_number }}">&laquo;</a>
+          {% endif %}
+          <span class="page-current">
+            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+          </span>
+          {% if page_obj.has_next %}
+          <a href="/all_foods?page={{ page_obj.next_page_number }}">&raquo;</a>
+          {% endif %}
+        </span>
+        <!-- <div class="number-of-foods">
+          <label for="number-of-foods">表示数を変更</label>
+          <input type="number" name="number-of-foods" id="number-of-foods" value="{paginate_by}">
+        </div> -->
+      </div>
+    {% endif %}
+    </div>
+  </div>
+<!-- {{ color }} -->
+<!-- {{ kcal.kcal__sum }}
+  {{ protein.protein__sum }} -->
+
+{% endblock %}
+

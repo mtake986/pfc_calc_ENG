@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}｜Change Username{% endblock %}
+{% block content %}
+
+<div class="header-bar">
+  <a href="{% url 'dashboard' user.id %}">&#8592; Back</a>
+</div>
+
+<div class="body-container change-username">
+  <div class="body-header">
+    <h2>Change username</h2>
+  </div>
+  {% include 'partials/_alerts.html' %}
+  <form action="" method="post">
+    {% csrf_token %}
+    <label for='old_username'>Old</label>
+    <input disabled type="text" name='old_username' value="{{ request.user.username }}" required>
+    <label for='new_username'>New</label>
+    <input type="text" name='new_username' required>
+    <label for='new_username2'>New (Type again)</label>
+    <input type="text" name='new_username2' required>
+    <label for='password'>Password is required</label>
+    <input type="password" name='password' required>
+    <button class="button" type="submit">Change</button>
+  </form>
+  
+</div>
+{% endblock %}

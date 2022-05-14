@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}｜コメント編集{% endblock %}
+{% block content %}
+
+<div class="header-bar">
+  <a href="{% url 'blog' blog.id %}">&#8592; Back</a>
+</div>
+
+<div class="body-container blog">
+  <div class="body-header">
+    <h2>コメント編集</h2>
+  </div>
+  <form action="{% url 'comment_update' blog.id comment.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="button button-with-delete" type="submit">完了</button>
+    <a class='button button-delete' href="{% url 'comment_delete' blog.id comment.id %}">削除</a>
+  </form>
+</div>
+{% endblock %}

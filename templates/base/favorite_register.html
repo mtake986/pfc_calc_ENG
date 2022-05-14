@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}｜お気に入り登録{% endblock %}
+{% block content %}
+
+
+<div class="header-bar">
+  <a href="{% url 'favorite' %}">&#8592; Back</a>
+</div>
+
+<div class="body-container">
+  <!-- お気に入り追加エリア -->
+  <div class="favorite-add-area">
+    <div class="body-header">
+      <h2>お気に入り登録</h2>
+    </div>
+    <div class="notion">
+      <p>※数字は半角、PFCは小数点一位まで可</p>
+    </div>
+    <form action="{% url 'favorite_register' %}" method="post">
+      {% csrf_token %}
+      {{ form }}
+      <button class="button" type="submit">追加</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

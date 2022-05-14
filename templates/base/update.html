@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}｜編集{% endblock %}
+{% block content %}
+
+<div class="header-bar">
+  <a href="{% url 'today_foods' %}">&#8592; Back</a>
+</div>
+
+<div class="body-container update-html">
+  <div class="body-header">
+    <h2>食べもの編集</h2>
+  </div>
+
+  <div class="notion">
+    <p>※数字は半角、PFCは小数点一位まで可</p>
+  </div>
+  
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="button button-with-delete" type="submit">更新</button>
+    <a class='button button-delete' href="{% url 'food_delete' food.id %}">削除</a>
+  </form>
+</div>
+{% endblock %}

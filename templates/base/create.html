@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}｜追加{% endblock %}
+{% block content %}
+
+
+<div class="header-bar">
+  <a href="{% url 'today_foods' %}">&#8592; Back</a>
+</div>
+
+<div class="body-container create-html">
+  <div class="body-header">
+    <h2>食べもの追加</h2>
+  </div>
+  <div class="notion">
+    <p>※数字は半角、PFCは小数点一位まで可</p>
+  </div>
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="button" type="submit">追加</button>
+  </form>
+</div>
+
+<!-- {% if form.errors %}
+  <div class="errorlist">
+    {% for errors in form.errors.values %}
+      {% for error in errors %}
+        {{ error }}
+      {% endfor %}
+    {% endfor %}
+  </div>
+{% endif %}
+{% csrf_token %}
+{% for field in form %}
+  <div class="field">
+    {{ field.label_tag }}
+    {{ field }}
+    {% if field.help_text %}
+      <span class="helptext">{{ field.help_text }}</span>
+    {% endif %}
+  </div>
+{% endfor %}
+<button class="button" type="submit">追加</button> -->
+
+{% endblock %}

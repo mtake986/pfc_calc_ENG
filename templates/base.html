@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PFC{% block title %}{% endblock %}</title>
+  <!-- # Google Font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300&display=swap" rel="stylesheet">
+  <!-- Fontawesome -->
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.15.1/css/all.css' integrity='sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp' crossorigin='anonymous'>
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <style>
+    :root{
+      --exsm: .9rem;
+      --smsm: 1rem;
+      --sm: 1.2rem;
+      --md: 1.5em;
+      --mdmd: 1.8rem;
+      --lg: 2rem;
+
+      --mainColor: #ff8b5f;
+      --mainTextColor: #333;
+      --secondaryColor: #fff;
+      --thirdColor: #fafafa;
+      --linkColor: #5e6468;
+      --deleteBtn: #fd5364;
+      --infoColor: #949494;
+    }
+    body{
+      background-color: var(--thirdColor);
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      padding-top: 50px;
+      color: var(--mainTextColor);
+      letter-spacing: 0.03em;
+    }
+
+    .container{
+      max-width: 600px;
+      margin: auto;
+      background-color: var(--secondaryColor);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Noto Serif JP', serif;
+      margin: 0;
+    }
+
+    a {
+      /* color: var(--linkColor); */
+      color: var(--linkColor);
+      text-decoration: none;
+      transition: .2s;
+    }
+    a:hover {
+      opacity: .7;
+    }
+    /* start 太いオレンジの部分 */
+    .header-bar{
+      color: var(--secondaryColor);
+      padding: 10px 20px;
+      border-radius: 5px 5px 0 0;
+      background: linear-gradient(90deg, #FFC107 0%,  var(--mainColor) 40%, var(--mainColor) 100%);
+    }
+    .header-bar .header-bar-top-date-and-link{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .header-bar .header-bar-top-date-and-link > span {
+      font-size: var(--smsm);
+    }
+    .header-bar .top-right-link{
+      display: flex;
+      justify-content: flex-end;
+    }
+    .header-bar a {
+      color: var(--secondaryColor);
+      text-decoration: none;
+    }
+    .header-bar .top-right-link a {
+      height: 24px;
+      color: var(--secondaryColor);
+      text-decoration: none;
+    }
+    .header-bar .top-right-link a i {
+      margin-right: 3px;
+    }
+    .header-bar h1 {
+      font-size: var(--mdmd);
+    }
+    .header-bar.today-foods .header-bar-main-msg h1 {
+      font-size: var(--mdmd);
+      margin-left: -5px;
+    }
+    .header-bar .header-bar-bottom-msg h3{
+      margin: 0;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      font-size: var(--smsm);
+    }
+    .header-bar .header-bar-bottom-msg span {
+      color: var(--mainTextColor);
+      font-family: 'Noto Serif JP', serif;
+      font-size: var(--md);
+    }
+    /* end 太いオレンジの部分 */
+
+    .body-container {
+      padding: 20px 20px 20px;
+      border-radius: 0 0 5px 5px;
+    }
+
+    .body-header {
+      margin-bottom: 30px;
+    }
+    .dashboard .body-header{
+      margin-bottom: 15px;
+    }
+    .body-header-title {
+      height: 46px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 35px;
+    }
+    .body-header-title.favorite {
+      margin-bottom: 30px;
+    }
+    .body-container h2 {
+      margin: 0px;
+      font-size: var(--mdmd);
+    }
+    .body-container .body-header-right a {
+      font-size: var(--lg);
+      color: var(--mainColor);
+      text-decoration: none;
+    }
+    .body-container .links a {
+      display: inline-block;
+      margin-right: 3px;
+      color: var(--linkColor);
+      font-size: var(--smsm);
+    }
+    table{
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table tr.table-header th{
+      color: var(--mainColor);
+      padding-bottom: 5px;
+    }
+    table th {
+      color: #000;
+    }
+    table td {
+      text-align: center;
+      padding-bottom: 3px;
+    }
+    table .total {
+      padding-top: 15px;
+    }
+    .fa-trash-alt {
+      color: var(--mainColor);
+    }
+    .today-foods .align-left {
+      width: 30%;
+    }
+    .today-foods td.align-left,
+    .favorite-foods td.align-left{
+      padding-left: 10px;
+    }
+    .align-left {
+      text-align: left;
+    }
+    td.align-left.all-foods-data {
+      padding-left: 0;
+      font-size: var(--exsm);
+      width: 30%;
+    }
+    .add-all-selected{
+      margin-top: 20px;
+    }
+    
+    input[type=checkbox].add{
+      display: none;
+    }
+    .add{
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      width: auto;
+    }
+    .add::before{
+      background: var(--secondaryColor);
+      border: 1px solid var(--mainTextColor);
+      content: '';
+      display: block;
+      height: 16px;
+      left: -7px;
+      margin-top: -15px;
+      position: absolute;
+      top: 50%;
+      width: 16px;
+    }
+    .add::after {
+      border-right: 3px solid var(--mainColor);
+      border-bottom: 3px solid var(--mainColor);
+      content: '';
+      display: block;
+      height: 9px;
+      left: -2px;
+      margin-top: -14px;
+      opacity: 0;
+      position: absolute;
+      top: 50%;
+      transform: rotate(45deg);
+      width: 5px;
+    }
+    input[type=checkbox]:checked + .add::after {
+      opacity: 1;
+    }
+    /* start input & form& button css */
+    input[type=url],
+    input[type=text],
+    input[type=password]{
+      border: 1px solid var(--mainColor);
+      border-radius: 5px;
+      padding: 10px;
+      width: 80%;
+      font-size: var(--smsm);
+      box-sizing: border-box;
+      display: block;
+    }
+    .all_foods input[type=text]{
+      border: 1px solid var(--mainColor);
+      border-radius: 5px;
+      padding: 10px;
+      width: 120px;
+      font-size: var(--smsm);
+      box-sizing: border-box;
+    }
+    .create_html input[type=text],
+    .create-html input[type=password],
+    input[type=text]{
+      border: 1px solid var(--mainColor);
+      border-radius: 5px;
+      padding: 10px;
+      font-size: var(--smsm);
+      box-sizing: border-box;
+    }
+    input[type=text]#id_eaten_date{
+      width: 120px;
+      display: block;
+      min-width: 120px;
+    }
+    textarea {
+      border: 1px solid var(--mainColor);
+      border-radius: 5px;
+      padding: 10px;
+      width: 80%;
+      font-size: var(--smsm);
+      box-sizing: border-box;
+      min-width: 260px;
+    }
+    select,
+    input[type=date],
+    input[type=number]{
+      border: 1px solid var(--mainColor);
+      border-radius: 5px;
+      padding: 10px;
+      width: 90px;
+      font-size: var(--smsm);
+      background: var(--secondaryColor);
+      box-sizing: border-box;
+    }
+    label {
+      margin-top: 10px;
+      display: block;
+      font-size: var(--exsm);
+    }
+    .button {
+      border: 1px solid var(--mainColor);
+      background: var(--secondaryColor);
+      color: var(--mainColor);
+      padding: 5px 10px;
+      font-size: var(--exsm);
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      margin: 20px 10px 10px 0;
+    }
+    .button-with-delete {
+      display: inline;
+    }
+    .button-delete {
+      border: 1px solid var(--deleteBtn);
+      padding: 6px 10px;
+      color: var(--secondaryColor);
+      background-color: var(--deleteBtn);
+      display: inline;
+      border-radius: 5px;
+    }
+    button:hover{
+      opacity: 0.7;
+      transition: .3s;
+    }
+    button.button-delete
+    .form-txt{
+      font-size: var(--smsm);
+      margin: 20px 0 0;
+    }
+    .form-bld-txt {
+      font-size: var(--sm);
+      margin-top: 10px;
+    }
+    .nutri-txt{
+      margin: 5px 0 20px;
+    }
+    form span {
+      font-size: var(--exsm);
+    }
+    .notion p{
+      margin: 10px 0 0;
+      font-size: var(--smsm);
+      text-decoration: underline;
+    }
+    .login-txt, .register-txt{
+      color: var(--mainColor);
+    }
+    .change-username input{
+      width: 260px;
+    }
+
+    /* start search input */
+    .search-form-row {
+      display: flex;
+      justify-content: space-between;
+      align-content: space-between;
+      flex-wrap: wrap;
+    }
+    .search-form-each label {
+      margin-top: 10px;
+      font-size: var(--exsm);
+    }
+    .search-form-each .search-form-food{
+      width: 160px;
+      box-sizing: border-box;
+    }
+    .search-form-each .search-form-date{
+      width: 90px;
+    }
+    .search-form-each .search-form-category{
+      width: 90px;
+    }
+    .search-form-row .search-button{
+      height: 40px;
+      margin: 20px 0;
+      width: 100%;
+    }
+    .search-form-each .search-form-keyword1,
+    .search-form-each .search-form-keyword2,
+    .search-form-each .search-form-keyword3{
+      width: 120px;
+      box-sizing: border-box;
+    }
+    .search-button {
+      border: 1px solid var(--mainColor);
+      background: var(--secondaryColor);
+      color: var(--mainColor);
+      padding: 10px 10px 7px;
+      margin-left: 10px;
+      font-size: var(--exsm);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .no-results {
+      padding: 20px;
+    }
+    /* end search input */
+  
+    /* start login & register input */
+    .login input,
+    .register input{
+      width: 100%;
+    }
+    /* end login & register input */
+    /* start blog input */
+    .blog_create input[type=text],
+    .all_blogs input[type=url],
+    .blog_update input[type=text],
+    .blog_update input[type=url]{
+      border: 1px solid var(--mainColor);
+      border-radius: 5px;
+      padding: 10px;
+      font-size: var(--smsm);
+      box-sizing: border-box;
+      min-width: 260px;
+      width: 80%;
+    }
+    .all_blogs textarea {
+      border: 1px solid var(--mainColor);
+      border-radius: 5px;
+      padding: 10px;
+      width: 80%;
+      max-height: 500px;
+      display: block;
+      box-sizing: border-box;
+      min-width: 260px;
+    }
+      /* end blog input */
+    /* end input & form & button css */
+
+    /* start blog css */
+    .blog-each {
+      padding: 15px 0;
+      border-top: 1px solid rgb(240, 240, 240);
+    }
+    .blog-each .blog-each-top{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 20px;
+    }
+    .blog-each .blog-each-top .blog-info{
+      color:  var(--infoColor);
+      margin: 0;
+      font-size: var(exsm);
+    }
+    .blog-each .blog-each-top .blog-info a{
+      color:  var(--linkColor);
+      font-size: var(--exsm);
+    }
+    .blog-each-new {
+      margin-left: 10px;
+      color: var(--mainColor);
+    }
+    .blog-each .blog-each-top > a{
+      font-size: var(--smsm);
+    }
+    .blog-each h3 {
+      margin: 5px 0 0;
+      font-size: var(--sm);
+    }
+    .blog-content {
+      font-size: var(--smsm);
+      margin: 15px 0 20px;
+      line-height: 2em;
+      font-family: 'Noto Serif JP', serif;
+      letter-spacing: .05em;
+    }
+    .blog > .blog-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 15px;
+    }
+    .blog > .blog-info div.user-and-date p{
+      margin: 0;
+      color: var(--mainTextColor);
+      font-size: var(--exsm);
+    }
+    .blog > .blog-info .icons a {
+      margin-left: 10px;
+      font-size: var(--sm);
+      color: var(--linkColor);
+    }
+    .ref-links a {
+      display: inline-block;
+      margin: 8px 10px 20px 0;
+    }
+    .blog .tags{
+      margin: 0;
+      color: var(--mainTextColor);
+      font-size: var(--smsm);
+    }
+    .comment-area p.number-of-comments{
+      font-size: var(--smsm);
+      margin: 20px 0 8px;
+    }
+    .comment-area p.number-of-comments span{
+      font-size: var(--sm);
+    }
+    .comment-area form {
+      font-size: var(--exsm);
+    }
+    .comment-area form textarea{
+      height: 60px;
+      max-height: 200px;
+      width: 100%;
+    }
+    .comment-area .button{
+      margin: 0;
+    }
+    .comment-area .comment{
+      margin-top: 15px;
+    }
+    .comment-area .comment-top-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .fa-user {
+      margin-right: 3px;
+      margin-bottom: 2px;
+      font-size: var(--exsm);
+      color: var(--infoColor);
+    }
+    .comment-area span.user {
+      color: var(--infoColor);
+    }
+    .comment-area span.date {
+      color: var(--infoColor);
+      font-size: var(--exsm);
+    }
+    .comment-area .comment p {
+      font-size: var(--smsm);
+      margin: 0;
+    }
+    /* end blog css */
+
+    ul.pagination {
+      padding: 20px 0 0 0;
+      display: inline-block;
+    }
+    .class-base-pagination {
+        margin: 10px 0 0;
+    }
+    .favorite-list {
+      margin-bottom: 30px;
+    }
+    .alert {
+      color: var(--mainTextColor);
+      background: var(--thirdColor);
+      font-size: var(--smsm);
+      padding: 10px 0;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .food-area{
+      margin-bottom: 50px;
+    }
+    .dashboard h1{
+      margin: 0 0 10px;
+    }
+    .fa-plus {
+      color: var(--mainColor);
+    }
+
+    @media screen and (max-width: 576px) {
+      /* end 太いオレンジの部分 */
+      :root{
+        --exexsm: 10px;
+        --exsm: .8rem;
+        --smsm: .9rem;
+        --sm: 1rem;
+        --md: 1.2em;
+        --mdmd: 1.5rem;
+        --lg: 1.8rem;
+        --lglg: 2rem
+      }
+
+      .header-bar .header-bar-top-date-and-link {
+        margin-bottom: 0;
+      }
+      .header-bar .header-bar-top-date-and-link > span {
+        font-size: var(--smsm);
+      }
+      .header-bar .top-right-link a {
+        color: var(--secondaryColor);
+        text-decoration: none;
+        font-size: var(--smsm);
+      }
+      .header-bar .top-right-link a i {
+        margin-right: 3px;
+      }
+      .header-bar.today-foods .header-bar-main-msg h1 {
+        font-size: var(--mdmd);
+      }
+      .header-bar h1 {
+        font-size: var(--mdmd);
+      }
+      .header-bar .header-bar-bottom-msg span {
+        color: var(--mainTextColor);
+        font-family: 'Noto Serif JP', serif;
+        font-size: var(--mdmd);
+      }
+      .header-bar .header-bar-bottom-msg h3{
+        margin: 0;
+        font-family: 'M PLUS Rounded 1c', sans-serif;
+        font-size: var(--smsm);
+      }
+      /* end 太いオレンジの部分 */
+      .body-header {
+        margin-bottom: 15px;
+      }
+      .body-header-title {
+        height: 35px;
+      }
+      .body-container .body-header-left h2,
+      .body-container h2 {
+        font-size: var(--mdmd);
+      }
+      .body-container .body-header-right a {
+        font-size: var(--lg);
+      }
+      .body-container .links a {
+        display: inline-block;
+        font-size: var(--exsm);
+      }
+      .body-header-title.favorite {
+        margin-bottom: 15px;
+      }
+      table {
+        font-size: var(--exsm);
+      }
+      h2{
+        font-size: var(--md);
+      }
+      h3{
+        font-size: var(--sm);
+      }
+      .blog-each {
+        padding: 10px 0;
+      }
+      .blog-each h3 {
+        margin: 0px 0 0;
+        font-size: var(--sm);
+      }
+      .blog-each .blog-each-top{
+        height: 15px;
+      }
+      .blog .tags{
+        font-size: var(--exsm);
+      }
+      .blog-each .blog-each-top p.blog-info,
+      .blog-each .blog-each-top p.blog-info a{
+        font-size: var(--exsm);
+      }
+      .blog-each .blog-each-top > a{
+        font-size: var(--sm);
+      }
+      .search-form-each label {
+        font-size: var(--smsm);
+      }
+      .login .btm-msg,
+      .register .btm-msg{
+        font-size: var(--smsm);
+      }
+      .notion p{
+        margin: 10px 0 0;
+        font-size: var(--exexsm);
+        text-decoration: underline;
+      }
+      .form-txt{
+        font-size: var(--smsm);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    {% block content %}
+    
+    {% endblock %}
+  </div>
+</body>
+<script>
+  var chkbx = document.getElementsByClassName("label_add_br");
+</script>
+</html>

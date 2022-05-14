@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}｜Sign up{% endblock %}
+{% block content %}
+
+<div class="header-bar">
+  <h2>Sign up</h2>
+</div>
+
+<div class="body-container register">
+  {% include 'partials/_alerts.html' %}
+  <form action="" method="post">
+    {% csrf_token %}
+    <label for='username'>Username</label>
+    <input type="text" name='username' required>
+    <label for='password'>Password</label>
+    <input type="password" name='password' required>
+    <label for='password2'>Password (Type again)</label>
+    <input type="password" name='password2' required>
+    <button class="button" type="submit">Sign up</button>
+  </form>
+  
+  <p class="btm-msg">Do you have an account?? <a class="login-txt" href="{% url 'login' %}">Sign in</a></p>
+</div>
+{% endblock %}

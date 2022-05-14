@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}｜記事作成{% endblock %}
+{% block content %}
+<section class="blog_create">
+  
+  <div class="header-bar">
+    <a href="{% url 'latest_blogs' %}">&#8592; Back</a>
+  </div>
+  
+  <div class="body-container blog_create">
+    <div class="body-header">
+      <h2>記事作成</h2>
+    </div>
+    <div class="notion">
+      <p>※タイトルとコンテンツ1は必須</p>
+    </div>
+
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class='button' type="submit">追加</button>
+    </form>
+  </div>
+
+</div>
+{% endblock %}

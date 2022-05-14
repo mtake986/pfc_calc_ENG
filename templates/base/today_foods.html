@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block title %}｜Home{% endblock %}
+{% block content %}
+
+
+<!-- header-bar -->
+<div class="header-bar today-foods">
+  <div class="header-bar-top-date-and-link">
+    <span>{% now "F" %} {% now "j" %}, ({% now "l" %})</span>
+    <div class="top-right-link">
+      <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Sign out</a>
+    </div>
+  </div>
+  <div class="header-bar-main-msg">
+    <h1>{{ request.user }}</h1>
+  </div>
+  <div class="header-bar-bottom-msg">
+    <h3>
+      The total amount of calories you've taken today is <span> {{ttl_kcal}}</span>.
+    </h3>
+  </div>
+
+</div>
+<!-- ///header-bar -->
+
+<div class="body-container">
+  <!-- body-header-bar -->
+  {% include 'partials/_alerts.html' %}
+  <div class="body-header">
+    <div class="body-header-title">
+      <div class="body-header-left">
+        <h2>Food you've eaten today</h2>
+      </div>
+      <div class="body-header-right">
+        <a href="{% url 'food_create' %}"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    <div class="links">
+      <a href="{% url 'all_foods' %}">Search</a>
+      <a href="{% url 'favorite' %}">Favorite</a>
+      <a href="{% url 'latest_blogs' %}">memo</a>
+      <a href="{% url 'dashboard' user.id %}">Profile</a>
+    </div>
+  </div>
+  <!-- ///body-header-bar -->
+  
+  <!-- table -->
+  <div class="food-items-wrapper today-foods">
+    <table>
+      <tr class="table-header">
+        <th class="align-left">Name</th>
+        <th>kcal</th>
+        <th>P</th>
+        <th>F</th>
+        <th>C</th>
+        <!-- <th>日付</th> -->
+        <!-- <th>カテゴリ</th> -->
+      </tr>
+      {% if user_foods %}
+        {% if user_breakfast_list %}
+          <tr>
+            <th class="align-left">Breakfast</th>
+          </tr>
+          {% for food in user_breakfast_list %}
+            <tr>
+              <td class="align-left"><a href="{% url 'food_update' food.id %}">{{ food.name }}</a></td>
+              <td>{{ food.kcal }}</td>
+              <td>{{ food.protein }}</td>
+              <td>{{ food.fat }}</td>
+              <td>{{ food.carb }}</td>
+              <!-- <td>{{ food.eaten_date }}</td> -->
+              <!-- <td>{{ food.category }}</td> -->
+              <!-- <td><a href="{% url 'food_update' food.id %}"><i class="far fa-edit"></i></a></td>
+              <td><a href="{% url 'food_delete' food.id %}"><i class="far fa-trash-alt"></i></a></td> -->
+            </tr>
+          {% endfor %}
+        {% endif %}
+
+        {% if user_lunch_list %}
+          <tr>
+            <th class="align-left">Lunch</th>
+          </tr>
+          {% for food in user_lunch_list %}
+            <tr>
+              <td class="align-left"><a href="{% url 'food_update' food.id %}">{{ food.name }}</a></td>
+              <td>{{ food.kcal }}</td>
+              <td>{{ food.protein }}</td>
+              <td>{{ food.fat }}</td>
+              <td>{{ food.carb }}</td>
+              <!-- <td>{{ food.eaten_date }}</td> -->
+              <!-- <td>{{ food.category }}</td> -->
+              <!-- <td><a href="{% url 'food_update' food.id %}"><i class="far fa-edit"></i></a></td>
+              <td><a href="{% url 'food_delete' food.id %}"><i class="far fa-trash-alt"></i></a></td> -->
+            </tr>
+          {% endfor %}
+        {% endif %}
+
+        {% if user_dinner_list %}
+          <tr>
+            <th class="align-left">Dinner</th>
+          </tr>
+          {% for food in user_dinner_list %}
+            <tr>
+              <td class="align-left"><a href="{% url 'food_update' food.id %}">{{ food.name }}</a></td>
+              <td>{{ food.kcal }}</td>
+              <td>{{ food.protein }}</td>
+              <td>{{ food.fat }}</td>
+              <td>{{ food.carb }}</td>
+              <!-- <td>{{ food.eaten_date }}</td> -->
+              <!-- <td>{{ food.category }}</td> -->
+              <!-- <td><a href="{% url 'food_update' food.id %}"><i class="far fa-edit"></i></a></td>
+              <td><a href="{% url 'food_delete' food.id %}"><i class="far fa-trash-alt"></i></a></td> -->
+            </tr>
+          {% endfor %}
+        {% endif %}
+
+
+
+        {% if user_snack_list %}
+          <tr>
+            <th class="align-left">Snack</th>
+          </tr>
+          {% for food in user_snack_list %}
+            <tr>
+              <td class="align-left"><a href="{% url 'food_update' food.id %}">{{ food.name }}</a></td>
+              <td>{{ food.kcal }}</td>
+              <td>{{ food.protein }}</td>
+              <td>{{ food.fat }}</td>
+              <td>{{ food.carb }}</td>
+              <!-- <td>{{ food.eaten_date }}</td> -->
+              <!-- <td>{{ food.category }}</td> -->
+              <!-- <td><a href="{% url 'food_update' food.id %}"><i class="far fa-edit"></i></a></td>
+              <td><a href="{% url 'food_delete' food.id %}"><i class="far fa-trash-alt"></i></a></td> -->
+            </tr>
+          {% endfor %}
+        {% endif %}
+
+        <!-- {% for food in user_foods %}
+          <tr>
+            <td class="align-left">{{ food.name }}</td>
+            <td>{{ food.kcal }}</td>
+            <td>{{ food.protein }}</td>
+            <td>{{ food.fat }}</td>
+            <td>{{ food.carb }}</td>
+            <td>{{ food.eaten_date }}</td>
+            <td>{{ food.category }}</td>
+            <td><a href="{% url 'food_update' food.id %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url 'food_delete' food.id %}"><i class="far fa-trash-alt"></i></a></td>
+          </tr>
+        {% endfor %} -->
+      {% else %}
+        <td colspan="8" class="no-results">｜You haven't eaten yet.｜</td>
+      {% endif %}
+
+      <!-- 合計と目標 -->
+      <tr>
+        <th class="align-left total">Total</th>
+        <th class="total">{{ ttl_kcal }}</th>
+        <th class="total">{{ ttl_protein }}</th>
+        <th class="total">{{ ttl_fat }}</th>
+        <th class="total">{{ ttl_carb }}</th>
+      </tr>
+      <tr>
+        <th class="align-left"><a href="{% url 'target' %}">Target</a></th>
+        {% if target %}
+          <th>{{ target.kcal }}</th>
+          <th>{{ target.protein }}</th>
+          <th>{{ target.fat }}</th>
+          <th>{{ target.carb }}</th>
+        {% else %}
+          <th>0</th>
+          <th>0</th>
+          <th>0</th>
+          <th>0</th>
+        {% endif %}
+        <!-- <th colspan="2"><a href="{% url 'target' %}">設定</a></th> -->
+      </tr>
+    </table>
+  </div>
+  <!-- ///table -->
+</div>
+
+<!-- {{ kcal.kcal__sum }}
+  {{ protein.protein__sum }} -->
+<!-- <p>目標は1960kcal, P130, F54.5, C237だよ</p> -->
+{% endblock %}

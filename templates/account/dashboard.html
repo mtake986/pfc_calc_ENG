@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block title %}｜{{ user }}{% endblock %}
+{% block content %}
+
+<!-- header-bar -->
+<div class="header-bar dashboard">
+  <div class="top-right-link">
+    <a href="{% url 'today_foods' %}"><i class="fas fa-home"></i>Home</a>
+  </div>
+  <div class="header-bar-main-msg">
+    <h1><a href="{% url 'change_username' user.id %}">{{ request.user }} <i style="font-size: 1rem;" class="far fa-edit"></i></a></h1>
+  </div>
+</div>
+<!-- ///header-bar -->
+
+<div class="body-container dashboard">
+  <!-- food-area -->
+  <div class="food-area">
+    <div class="body-header">
+      <h2>Recent Calories and PFCs</h2>
+      <!-- <a href="">過去すべての推移</a> -->
+    </div>
+    
+    <div class="food-items-wrapper">
+      <table>
+        <tr class="table-header">
+          <th class="align-left">Date</th>
+          <th>kcal</th>
+          <th>P</th>
+          <th>F</th>
+          <th>C</th>
+        </tr>
+
+        <tr>
+          <td class="align-left">{{ html_yest }}</td>
+          <td>{{ yest_k.kcal__sum }}</td>
+          <td>{{ yest_p.protein__sum }}</td>
+          <td>{{ yest_f.fat__sum }}</td>
+          <td>{{ yest_c.carb__sum }}</td>
+        </tr>
+
+        <tr>
+          <td class="align-left">{{ html_two_days_ago }}</td>
+          <td>{{ two_days_ago_k.kcal__sum }}</td>
+          <td>{{ two_days_ago_p.protein__sum }}</td>
+          <td>{{ two_days_ago_f.fat__sum }}</td>
+          <td>{{ two_days_ago_c.carb__sum }}</td>
+        </tr>
+
+        <tr>
+          <td class="align-left">{{ html_three_days_ago }}</td>
+          <td>{{ three_days_ago_k.kcal__sum }}</td>
+          <td>{{ three_days_ago_p.protein__sum }}</td>
+          <td>{{ three_days_ago_f.fat__sum }}</td>
+          <td>{{ three_days_ago_c.carb__sum }}</td>
+        </tr>
+
+        <tr>
+          <td class="align-left">{{ html_four_days_ago }}</td>
+          <td>{{ four_days_ago_k.kcal__sum }}</td>
+          <td>{{ four_days_ago_p.protein__sum }}</td>
+          <td>{{ four_days_ago_f.fat__sum }}</td>
+          <td>{{ four_days_ago_c.carb__sum }}</td>
+        </tr>
+
+        <tr>
+          <td class="align-left">{{ html_five_days_ago }}</td>
+          <td>{{ five_days_ago_k.kcal__sum }}</td>
+          <td>{{ five_days_ago_p.protein__sum }}</td>
+          <td>{{ five_days_ago_f.fat__sum }}</td>
+          <td>{{ five_days_ago_c.carb__sum }}</td>
+        </tr>
+
+        <tr>
+          <td class="align-left">{{ html_six_days_ago }}</td>
+          <td>{{ six_days_ago_k.kcal__sum }}</td>
+          <td>{{ six_days_ago_p.protein__sum }}</td>
+          <td>{{ six_days_ago_f.fat__sum }}</td>
+          <td>{{ six_days_ago_c.carb__sum }}</td>
+        </tr>
+
+        <tr>
+          <td class="align-left">{{ html_seven_days_ago }}</td>
+          <td>{{ seven_days_ago_k.kcal__sum }}</td>
+          <td>{{ seven_days_ago_p.protein__sum }}</td>
+          <td>{{ seven_days_ago_f.fat__sum }}</td>
+          <td>{{ seven_days_ago_c.carb__sum }}</td>
+        </tr>
+
+        {% if target %}
+          <tr>
+            <th class="align-left">Target</th>
+            <th>{{ target.kcal }}</th>
+            <th>{{ target.protein }}</th>
+            <th>{{ target.fat }}</th>
+            <th>{{ target.carb }}</th>
+          </tr>
+        {% else %}
+          <tr>
+            <th class="align-left">Target</th>
+            <th>0</th>
+            <th>0</th>
+            <th>0</th>
+            <th>0</th>
+          </tr>
+        {% endif %}
+      </table>
+    </div>
+  </div>
+  <!-- ///food-area -->
+
+  <!-- blog-area -->
+  <div class="blog-area">
+    <div class="body-header">
+      <h2>Latest memos</h2>
+    </div>
+    <!-- 記事一覧 -->
+    <div class="blog-body">
+      {% if user_blogs %}
+        {% for blog in user_blogs %}
+          <div class="blog-each">
+            <div class="blog-each-top">
+              <p class="blog-info">Updated: {{ blog.updated }}</p>
+              <div class="blog-each-links">
+                <!-- <a href="{% url 'blog' blog.id %}" class="fas fa-info-circle"></a> -->
+                <!-- {% if request.user == blog.user %}
+                  <a href="{% url 'blog_update' blog.id %}" class="far fa-edit"></a>
+                  <a href="{% url 'blog_delete' blog.id %}" class="far fa-trash-alt"></a>
+                {% endif %} -->
+              </div>
+            </div>
+            <h3>{{ blog.title }}</h3>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No memoes created by {{ user }}</p>
+      {% endif %}
+    </div>
+  </div>
+  <!-- ///blog-area -->
+
+  <!-- <div class="username-password-change-area">
+    <div>
+      <h2>ユーザー名とパスワードの変更</h2>
+    </div>
+  </div> -->
+</div>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block title %}｜{{ blog.title }}{% endblock %}
+{% block content %}
+
+
+<div class="header-bar">
+  <a href="{% url 'latest_blogs' %}">&#8592; Back</a>
+</div>
+
+<div class="body-container blog">
+  <div class="blog-info">
+    <div class="user-and-date">
+      <!-- {% if request.user == blog.user %}
+        <a href="{% url 'dashboard' user.id %}">あなた</a>が{{ blog.created }}に作成
+      {% else %}
+        {{ blog.user }}が{{ blog.created }}に作成
+      {% endif %} -->
+      <p>{{ blog.user }}</p>
+      <p>{{ blog.created }}</p>
+    </div>
+    <div class="icons">
+      {% if request.user == blog.user %}
+        <a href="{% url 'blog_update' blog.id %}" class="far fa-edit"></a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="blog-main">
+    <h2>{{ blog.title }}</h2>
+    <!-- <h3>コンテンツ1</h3> -->
+    <p class="blog-content">{{ blog.content_1 }}</p>
+    {% if blog.content_2 %}
+      <!-- <h3>コンテンツ2</h3> -->
+      <p class="blog-content">{{ blog.content_2 }}</p>
+    {% endif %}
+    {% if blog.content_3 %}
+      <!-- <h3>コンテンツ3</h3> -->
+      <p class="blog-content">{{ blog.content_3 }}</p>
+    {% endif %}
+  
+    <div class="ref-links">
+      {% if link_1 %}
+        <a class="button" href="{{ blog.link_1 }}">参考リンク１</a>
+      {% endif %}
+      {% if link_2 %}
+        <a class="button" href="{{ blog.link_2 }}">参考リンク２</a>
+      {% endif %}
+    </div>
+
+    <div class="tags">
+      {% if blog.tags %}
+        <div>タグ：
+          {% for i in blog.tags.all %}
+            <a href="{% url 'tag_redirect' %}">{{ i }}, </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  
+  <div class="comment-area">
+    <hr>
+    <p class="number-of-comments"><span>{{ number_of_comments }}</span>件のコメント</p>
+    <div class="comment-form">
+      <form action="{% url 'blog' blog.id %}" method="post">
+        {% csrf_token %}
+        {{ form.text }}
+        <button type="submit" class="button">完了</button>
+      </form>
+    </div>
+    <div class="comment-all">
+      {% if comments %}
+        {% for comment in comments %}
+          <div class="comment">
+            <div class="comment-top-info">
+              <div class="comment-left">
+                <i class="far fa-user"></i><span class="user">{{ comment.user }}</span>
+                <span class="date">{{ comment.created|timesince }}前</span>
+              </div>
+              <div class="comment-right">
+                {% if request.user == blog.user %}
+                <a href="{% url 'comment_update' blog.id comment.id %}" class="far fa-edit"></a>
+                {% endif %}
+              </div>
+            </div>
+            <p>{{ comment.text|linebreaks }}</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

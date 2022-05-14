@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}｜記事編集{% endblock %}
+{% block content %}
+
+<div class="header-bar">
+  <a href="{% url 'blog' blog.id %}">&#8592; Back</a>
+</div>
+
+<div class="body-container blog_update">
+  <div class="body-header">
+    <h2>編集</h2>
+  </div>
+  <form action="" method="post">
+    {% csrf_token %}
+    <div class="notion">
+      <p>※タイトルとコンテンツ1は必須</p>
+    </div>
+    {{ form.as_p }}
+    <button class="button button-with-delete" type="submit">完了</button>
+    <a class='button button-delete' href="{% url 'blog_delete' blog.id %}">削除</a>
+  </form>
+</div>
+{% endblock %}
